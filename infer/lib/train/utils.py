@@ -219,6 +219,7 @@ def plot_spectrogram_to_numpy(spectrogram):
     global MATPLOTLIB_FLAG
     if not MATPLOTLIB_FLAG:
         import matplotlib
+
         matplotlib.use("Agg")
         MATPLOTLIB_FLAG = True
         mpl_logger = logging.getLogger("matplotlib")
@@ -234,7 +235,7 @@ def plot_spectrogram_to_numpy(spectrogram):
     plt.tight_layout()
 
     fig.canvas.draw()
-    
+
     # matplotlib のバージョンに応じて適切なメソッドを使用
     try:
         buf = fig.canvas.buffer_rgba()
@@ -246,13 +247,15 @@ def plot_spectrogram_to_numpy(spectrogram):
             data = data.reshape(fig.canvas.get_width_height()[::-1] + (3,))
         except AttributeError:
             import io
+
             buf = io.BytesIO()
-            fig.savefig(buf, format='png', dpi=100, bbox_inches='tight')
+            fig.savefig(buf, format="png", dpi=100, bbox_inches="tight")
             buf.seek(0)
             from PIL import Image
+
             img = Image.open(buf)
-            data = np.array(img)[:, :, :3]  
-    
+            data = np.array(img)[:, :, :3]
+
     plt.close()
     return data
 
@@ -261,6 +264,7 @@ def plot_alignment_to_numpy(alignment, info=None):
     global MATPLOTLIB_FLAG
     if not MATPLOTLIB_FLAG:
         import matplotlib
+
         matplotlib.use("Agg")
         MATPLOTLIB_FLAG = True
         mpl_logger = logging.getLogger("matplotlib")
@@ -281,7 +285,7 @@ def plot_alignment_to_numpy(alignment, info=None):
     plt.tight_layout()
 
     fig.canvas.draw()
-    
+
     # matplotlib のバージョンに応じて適切なメソッドを使用
     try:
         buf = fig.canvas.buffer_rgba()
@@ -293,13 +297,15 @@ def plot_alignment_to_numpy(alignment, info=None):
             data = data.reshape(fig.canvas.get_width_height()[::-1] + (3,))
         except AttributeError:
             import io
+
             buf = io.BytesIO()
-            fig.savefig(buf, format='png', dpi=100, bbox_inches='tight')
+            fig.savefig(buf, format="png", dpi=100, bbox_inches="tight")
             buf.seek(0)
             from PIL import Image
+
             img = Image.open(buf)
-            data = np.array(img)[:, :, :3]  
-    
+            data = np.array(img)[:, :, :3]
+
     plt.close()
     return data
 
@@ -316,7 +322,7 @@ def load_filepaths_and_text(filename, split="|"):
     except UnicodeDecodeError:
         with open(filename) as f:
             filepaths_and_text = [line.strip().split(split) for line in f]
-    
+
     return filepaths_and_text
 
 
